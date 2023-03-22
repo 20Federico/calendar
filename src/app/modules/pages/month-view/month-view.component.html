@@ -1,1 +1,12 @@
-<p>data di inizio mese: {{startDate}}</p>
+<mat-grid-list cols="7" rowHeight="fit" gutterSize="0"> 
+  <mat-grid-tile *ngFor="let item of days; index as i">
+    <div class="d-flex flex-column align-items-center justify-content-start h-100 spacing">
+      <div>
+        <strong>{{i < 7 ? item.label.split(' ')[0] : ''}}</strong>
+      </div>
+      <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''">
+        {{item.label.split(' ')[1]}}
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

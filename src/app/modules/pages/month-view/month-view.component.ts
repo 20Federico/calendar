@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class MonthViewComponent implements OnInit {
 
   startDate: string = '';
+  days: any = [];
 
   constructor(
     private route: ActivatedRoute
@@ -19,16 +20,94 @@ export class MonthViewComponent implements OnInit {
     this.route.params.subscribe(params=>{
       console.log('initmese');
       this.startDate = params['startDate'];
+
       this.createGrid();
       this.getEvents();
     })
   }
 
-  getEvents() {
-
+  getCurrentDay(item: any) {
+    const today = new Date(new Date().setHours(0,0,0,0)).toISOString();
+    let itemDate = new Date(item.date).toISOString();
+    return today == itemDate;
   }
 
   createGrid() {
+    const week = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
+
+    let month = +this.startDate.split('-')[1];
+
+    let date = new Date(+this.startDate.split('-')[2], +this.startDate.split('-')[1], 1);
+    let days = [];
+    while (date.getMonth() === month) {
+      days.push(
+        {
+          label: week[new Date(date).getDay()].slice(0, 3) + ' ' + new Date(date).getDate(),
+          date: new Date(date),
+          disabled: false,
+        }  
+      );
+      date.setDate(date.getDate() + 1);
+    }
+    this.days = days;
+
+    let firstDay = new Date(+this.startDate.split('-')[2], +this.startDate.split('-')[1], 1)
+    console.log(firstDay);
     
+    let firstMonday = firstDay.getDay() == 1 ? undefined : new Date(+this.startDate.split('-')[2], +this.startDate.split('-')[1], 2-(firstDay.getDay()==0 ? 7 : firstDay.getDay()))
+    console.log(firstMonday);
+    
+
+    let lastDay = new Date( this.days[this.days.length-1].date);
+    let lastSunday = lastDay.getDay() == 0 ? undefined : new Date(lastDay.getFullYear(), lastDay.getMonth(), lastDay.getDate()+7-lastDay.getDay())
+
+    if (firstMonday) {
+      const beforeDay  = [];
+      while (firstMonday < firstDay) {
+        beforeDay.push(
+          {
+            label: week[new Date(firstMonday).getDay()].slice(0, 3) + ' ' + new Date(firstMonday).getDate(),
+            date: new Date(firstMonday),
+            disabled: true
+          }  
+        )
+        firstMonday = new Date(firstMonday.getFullYear(), firstMonday.getMonth(), firstMonday.getDate()+1);
+      }
+      this.days = beforeDay.concat(this.days);
+      console.log(beforeDay);
+      
+    }
+
+    if (lastSunday) {
+      const afterDays = [];
+      while (lastDay < lastSunday) {
+        lastDay = new Date(lastDay.getFullYear(), lastDay.getMonth(), lastDay.getDate()+1);
+        afterDays.push(
+          {
+            label: week[new Date(lastDay).getDay()].slice(0, 3) + ' ' + new Date(lastDay).getDate(),
+            date: new Date(lastDay),
+            disabled: true
+          }  
+        )
+      }      
+      this.days = this.days.concat(afterDays);
+    }
+    console.log(this.days);
   }
+
+  
+  getEvents() {
+    // mock che restituisce array di oggetti evento
+    //display events
+  }
+
+  //al click su un evento lo apro e lo posso modificare o cancellare
+
+  // assegna i giorni alla griglia (giorni del mese prec e succ disabilitati)
+  
+  // al click su una griglia si seleziona il giorno
+  //al doppio click su una griglia si apre il crea evento
+  // aggiungi bottone crea evento in alto a destra
+
+  //aggiungi transizione tra un mese e l'altro
 }

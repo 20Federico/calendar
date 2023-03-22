@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class WeekViewComponent implements OnInit {
 
   startDate: string = '';
+  days: { label: string; date: Date; }[] = [];
 
   constructor(
     private route: ActivatedRoute
@@ -28,6 +29,24 @@ export class WeekViewComponent implements OnInit {
   }
 
   createGrid() {
+    const week = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
 
+    let date = new Date(+this.startDate.split('-')[2], +this.startDate.split('-')[1], +this.startDate.split('-')[0]);
+    let days = [];
+
+    let startDate = new Date(date.getFullYear(), date.getMonth(), 1+date.getDate()-date.getDay())
+    let endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-date.getDay())
+    while (startDate <= endDate) {
+      days.push(
+        {
+          label: week[new Date(startDate).getDay()] + ' ' + new Date(startDate).getDate() + '/'+new Date(startDate).getMonth(),
+          date: new Date(startDate),
+        }  
+      );
+      startDate.setDate(startDate.getDate() + 1);
+    }
+    this.days = days;
+    console.log(this.days);
+    
   }
 }

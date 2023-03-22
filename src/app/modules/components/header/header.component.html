@@ -1,49 +1,41 @@
 
-<p>
-  <mat-toolbar color="secondary" class="example-spacer">
-    <!-- <button mat-icon-button class="example-icon mr-2" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button> -->
-    
-    <div class="d-flex align-items-center">
-      <!-- <span class="me-4">Calendar LOGO</span> -->
-      <span class="me-4">
-        <img src="../../../../assets/logo/logo_calendar_tranparent.png" alt="logoImg" style="transform: scale(.8);">
-      </span>
+<mat-toolbar color="secondary" class="example-spacer">
+  <div class="d-flex align-items-center">
+    <span class="me-4">
+      <img src="../../../../assets/logo/logo_calendar_tranparent.png" alt="logoImg" style="transform: scale(.8);">
+    </span>
 
-      
-      <button mat-raised-button class="me-4" (click)="goToToday()" [title]="this.days[this.currentDate.getDay()] + ', ' + this.currentDate.getDate() + ' ' + this.months[this.currentDate.getMonth()]">Oggi</button>
+    <button mat-raised-button class="me-4" (click)="goToToday()" [title]="this.days[this.currentDate.getDay()] + ', ' + this.currentDate.getDate() + ' ' + this.months[this.currentDate.getMonth()]">Oggi</button>
 
-      <div class="me-4 navigate">
-        <mat-icon class="hover" [title]="getPrevNextLabel(false)" (click)="goToPreviousNext(false)">navigate_before</mat-icon>
-        <mat-icon class="hover" [title]="getPrevNextLabel(true)" (click)="goToPreviousNext(true)">navigate_next</mat-icon>
-      </div>
-
-      <mat-form-field hidden class="example-full-width" appearance="fill">
-        <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" (dateChange)="changeDate($event)">
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <button mat-raised-button (click)="picker.open()">{{getDateSelected()}} <mat-icon>arrow_drop_down</mat-icon></button>
+    <div class="me-4 navigate">
+      <mat-icon class="hover" [title]="getPrevNextLabel(false)" (click)="goToPreviousNext(false)">navigate_before</mat-icon>
+      <mat-icon class="hover" [title]="getPrevNextLabel(true)" (click)="goToPreviousNext(true)">navigate_next</mat-icon>
     </div>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="me-4" style="width:fit-content !important">
-      <span>{{viewSelected}}</span>
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['/month', startDate.getDate() + '-' + startDate.getMonth() + '-' + startDate.getFullYear()]" (click)="changeView('Mese')">
-        <mat-icon>calendar_today</mat-icon>
-        <span>Mese</span>
-      </button>
-      <button mat-menu-item [routerLink]="['/week', startDate.getDate() + '-' + startDate.getMonth() + '-' + startDate.getFullYear()]" (click)="changeView('Settimana')">
-        <mat-icon>view_week</mat-icon>
-        <span>Settimana</span>
-      </button>
-      <button mat-menu-item [routerLink]="['/day', startDate.getDate() + '-' + startDate.getMonth() + '-' + startDate.getFullYear()]" (click)="changeView('Giorno')">
-        <mat-icon>calendar_view_day</mat-icon>
-        <span>Giorno</span>
-      </button>
-    </mat-menu>
+    <mat-form-field hidden class="example-full-width" appearance="fill">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" (dateChange)="changeDate($event)">
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button (click)="picker.open()">{{getDateSelected()}} <mat-icon>arrow_drop_down</mat-icon></button>
+  </div>
 
-  </mat-toolbar>
-</p>
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="me-4" style="width:fit-content !important">
+    <span>{{viewSelected}}</span>
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/month', startDate.getDate() + '-' + startDate.getMonth() + '-' + startDate.getFullYear()]" (click)="changeView('Mese')">
+      <mat-icon>calendar_today</mat-icon>
+      <span>Mese</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/week', startDate.getDate() + '-' + startDate.getMonth() + '-' + startDate.getFullYear()]" (click)="changeView('Settimana')">
+      <mat-icon>view_week</mat-icon>
+      <span>Settimana</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/day', startDate.getDate() + '-' + startDate.getMonth() + '-' + startDate.getFullYear()]" (click)="changeView('Giorno')">
+      <mat-icon>calendar_view_day</mat-icon>
+      <span>Giorno</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

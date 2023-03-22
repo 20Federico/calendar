@@ -1,0 +1,26 @@
+mat-grid-list {
+  height: calc(100vh - 70px);
+  width: 100vw;
+}
+
+mat-grid-tile {
+  border: .3px solid lightgray;
+
+  &:hover{
+    background-color: rgba(237, 237, 237, .5);
+  }
+}
+
+.currentDay {
+  border-radius: 50%;
+  background-color: deepskyblue;
+}
+
+.spacing {
+  padding: 10px 0;
+}
+
+.numberCircle {
+  font-weight: bold;
+  text-decoration: underline;
+}
