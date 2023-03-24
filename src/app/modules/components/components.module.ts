@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { MaterialComponentsModule } from '../material/material-components.module';
 import { FormsModule } from '@angular/forms';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    EventComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    EventComponent
   ]
 })
 export class ComponentsModule { }

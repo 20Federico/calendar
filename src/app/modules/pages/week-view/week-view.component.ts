@@ -10,6 +10,22 @@ export class WeekViewComponent implements OnInit {
 
   startDate: string = '';
   days: { label: string; date: Date; }[] = [];
+  eventOpen = false;
+  event: {
+    title: string,
+    description: string,
+    date: Date,
+    startHour: string,
+    endHour: string,
+    color: string
+  } = {
+    title: '',
+    description: '',
+    date: new Date(),
+    startHour: '08:00',
+    endHour: '09:00',
+    color: '#BFBFBF'
+  }
 
   constructor(
     private route: ActivatedRoute
@@ -17,7 +33,6 @@ export class WeekViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params=>{
-      console.log('initmese');
       this.startDate = params['startDate'];
       this.createGrid();
       this.getEvents();
@@ -29,7 +44,7 @@ export class WeekViewComponent implements OnInit {
   }
 
   createGrid() {
-    const week = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
+    const week = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab']
 
     let date = new Date(+this.startDate.split('-')[2], +this.startDate.split('-')[1], +this.startDate.split('-')[0]);
     let days = [];
@@ -39,14 +54,26 @@ export class WeekViewComponent implements OnInit {
     while (startDate <= endDate) {
       days.push(
         {
-          label: week[new Date(startDate).getDay()] + ' ' + new Date(startDate).getDate() + '/'+new Date(startDate).getMonth(),
+          label: week[new Date(startDate).getDay()] + ' ' + new Date(startDate).getDate(),
           date: new Date(startDate),
         }  
       );
       startDate.setDate(startDate.getDate() + 1);
     }
     this.days = days;
-    console.log(this.days);
     
+  }
+
+  getCurrentDay(item: any) {
+    const today = new Date(new Date().setHours(0,0,0,0)).toISOString();
+    let itemDate = new Date(item.date).toISOString();
+    return today == itemDate;
+  }
+
+  openEvent(date: Date, hour:number) {
+    this.event.date = new Date(date);
+    this.event.startHour = (''+hour).padStart(2,'0')+':00';
+    this.event.endHour = (1+hour+'').padStart(2,'0')+':00';
+    this.eventOpen = !this.eventOpen;
   }
 }

@@ -4,6 +4,8 @@ import { MonthViewComponent } from './month-view/month-view.component';
 import { WeekViewComponent } from './week-view/week-view.component';
 import { DayViewComponent } from './day-view/day-view.component';
 import { MaterialComponentsModule } from '../material/material-components.module';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { MaterialComponentsModule } from '../material/material-components.module
   ],
   imports: [
     CommonModule,
-    MaterialComponentsModule
+    MaterialComponentsModule,
+    FormsModule,
+    ComponentsModule
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

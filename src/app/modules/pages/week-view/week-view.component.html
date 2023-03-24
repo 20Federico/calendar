@@ -1,3 +1,32 @@
-<p>data di inizio settimana: {{startDate}}</p>
-<p>giorni: {{days}}</p>
+
+<div class="d-flex">
+  <div style="width: 50px;">
+  </div>
+  <mat-grid-list cols="7" rowHeight="fit" gutterSize="0" class="d-flex" style="overflow: visible;"> 
+    <mat-grid-tile *ngFor="let item of days; index as i" style="overflow:inherit;">
+      <div class="d-flex flex-column align-items-center justify-content-start h-100 w-100 spacing">
+        <div class="text-center">
+          <div>
+            <strong>{{i < 7 ? item.label.split(' ')[0].toUpperCase() : ''}}</strong>
+          </div>
+          <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''">
+            {{item.label.split(' ')[1]}}
+          </div>
+        </div>
+        <div style="width:100%; flex-grow: 1; overflow: visible;" class="d-flex flex-column">
+          <div class="hour" style="height: 50px; border: 1px solid lightgray; border-top: none;" *ngFor="let el of [].constructor(24); index as r" (click)="openEvent(item.date, r)">
+            <div *ngIf="i==0" style="font-size: 10px; color: rgb(139, 138, 138); line-height: 100%; position:relative; top: -5px; right: 30px; z-index: 100;" >
+              {{(''+r).padStart(2, '0') + ':00'}}
+            </div>
+          </div>
+          <!-- <div class="event" style="cursor: pointer; font-weight: 500; background-color: yellow; color: black; border-radius: 10px; padding: 2px 10px; height: 20px; width: 100%; line-height: 100%;">
+            ciao sono un evento
+          </div> -->
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<app-event [visible]="eventOpen" [event]="event"></app-event>
 

@@ -1,5 +1,5 @@
 mat-grid-list {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 60px);
   width: 100vw;
 }
 
@@ -11,11 +11,6 @@ mat-grid-tile {
   }
 }
 
-.currentDay {
-  border-radius: 50%;
-  background-color: deepskyblue;
-}
-
 .spacing {
   padding: 10px 0;
 }
@@ -23,4 +18,9 @@ mat-grid-tile {
 .numberCircle {
   font-weight: bold;
   text-decoration: underline;
+}
+
+.example-full-width {
+  max-width: 30%;
+  width: 20%;
 }

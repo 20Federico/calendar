@@ -1,0 +1,54 @@
+<div *ngIf="visible" style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 50%; height: 50vh; z-index: 1000;">
+  <mat-card style="box-shadow: 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12), 0 11px 15px -7px rgba(0,0,0,.2);">
+    <mat-card-content class="d-flex flex-column">
+      <mat-card-title>
+        <mat-form-field class="example-form-field" class="w-100">
+          <mat-label>Aggiungi un titolo</mat-label>
+          <input matInput [(ngModel)]="event.title" type="text">
+          <button *ngIf="event.title" matSuffix mat-icon-button aria-label="Clear">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-title>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Descrizione...</mat-label>
+        <input matInput [(ngModel)]="event.description">
+      </mat-form-field>   
+      <mat-form-field appearance="fill" class="w-50">
+        <mat-label>Scegli una data</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" [value]="event.date">
+        <mat-datepicker-toggle matIconSuffix [for]="picker" class="w-25"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="month" [startAt]="event.date"></mat-datepicker>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+      </mat-form-field>
+      
+      <div class="d-flex">
+        <mat-form-field appearance="fill" class="w-25 pe-2">
+          <mat-label>Orario di inizio</mat-label>
+          <mat-select (selectionChange)="checkDates()" [(value)]="event.startHour">
+            <mat-option *ngFor="let hour of generateHourList(); index as i" [value]="hour">{{hour}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-25">
+          <mat-label>Orario di fine</mat-label>
+          <mat-select (selectionChange)="checkDates()" [(value)]="event.endHour">
+            <mat-option *ngFor="let hour of generateHourList(); index as i" [value]="hour">{{hour}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="example-full-width w-25" >
+        <mat-label>Colore</mat-label>
+        <input type="color" [(ngModel)]="event.color" matInput placeholder="" value="#BFBFBF">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+
+    <mat-card-actions align="end">
+      <button mat-button (click)="visible = false">CHIUDI</button>
+      <button mat-button (click)="visible = false">SALVA</button>
+    </mat-card-actions>
+  </mat-card>
+  
+
+</div>

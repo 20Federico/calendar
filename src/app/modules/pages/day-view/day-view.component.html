@@ -1,2 +1,34 @@
-<p>data di inizio giorno: {{startDate}}</p>
-<p>giorno: {{dateSelected}}</p>
+<mat-grid-list cols="1" rowHeight="fit" gutterSize="0"> 
+  <mat-grid-tile>
+    <div class="d-flex h-100 w-100 overflow">
+      <div class="width-50">
+
+      </div>
+      <div class="d-flex flex-column justify-content-start h-100 w-100 spacing">
+        <div class="p-3 text-center pb-0 width-fit">
+          <div>
+            <strong>{{dateSelected.label.split(' ')[0].toUpperCase()}}</strong>
+          </div>
+          <div [ngClass]="getCurrentDay() ? 'numberCircle' : ''">
+            {{dateSelected.label.split(' ')[1]}}
+          </div>
+        </div>
+        <div class="day d-flex flex-column">
+          <div class="hour" *ngFor="let item of [].constructor(24); index as i">
+            <div class="hours">
+              {{(''+i).padStart(2, '0') + ':00'}}
+            </div>
+            <div (click)="openEvent(dateSelected.date, i)" style="width: 100%; height: 100%;">
+              
+            </div>
+          </div>
+          <!-- <div class="event" style="cursor: pointer; font-weight: 500; background-color: yellow; color: black; border-radius: 10px; padding: 2px 10px; height: 20px; width: 100%; line-height: 100%;">
+            ciao sono un evento
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<app-event [visible]="eventOpen" [event]="event"></app-event>

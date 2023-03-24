@@ -1,0 +1,19 @@
+.numberCircle {
+  font-weight: bold;
+  text-decoration: underline;
+}
+mat-grid-list {
+  height: calc(100vh - 60px);
+  width: 100vw;
+  overflow: auto;
+}
+
+.spacing {
+  padding: 10px 0;
+}
+
+.hour {
+  &:hover{
+    background-color: rgba(237, 237, 237, .5);
+  }
+}

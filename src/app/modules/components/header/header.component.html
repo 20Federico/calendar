@@ -2,14 +2,18 @@
 <mat-toolbar color="secondary" class="example-spacer">
   <div class="d-flex align-items-center">
     <span class="me-4">
-      <img src="../../../../assets/logo/logo_calendar_tranparent.png" alt="logoImg" style="transform: scale(.8);">
+      <img src="../../../../assets/logo/logo_calendar_tranparent.png" alt="logoImg" class="transform">
     </span>
 
-    <button mat-raised-button class="me-4" (click)="goToToday()" [title]="this.days[this.currentDate.getDay()] + ', ' + this.currentDate.getDate() + ' ' + this.months[this.currentDate.getMonth()]">Oggi</button>
+    <button mat-raised-button class="me-4" (click)="goToToday()"
+            [matTooltip]="this.days[this.currentDate.getDay()] + ', ' + this.currentDate.getDate() + ' ' + this.months[this.currentDate.getMonth()]"
+    >
+    Oggi
+    </button>
 
     <div class="me-4 navigate">
-      <mat-icon class="hover" [title]="getPrevNextLabel(false)" (click)="goToPreviousNext(false)">navigate_before</mat-icon>
-      <mat-icon class="hover" [title]="getPrevNextLabel(true)" (click)="goToPreviousNext(true)">navigate_next</mat-icon>
+      <mat-icon class="hover" [matTooltip]="getPrevNextLabel(false)"(click)="goToPreviousNext(false)">navigate_before</mat-icon>
+      <mat-icon class="hover" [matTooltip]="getPrevNextLabel(true)" (click)="goToPreviousNext(true)">navigate_next</mat-icon>
     </div>
 
     <mat-form-field hidden class="example-full-width" appearance="fill">
@@ -19,7 +23,7 @@
     <button mat-raised-button (click)="picker.open()">{{getDateSelected()}} <mat-icon>arrow_drop_down</mat-icon></button>
   </div>
 
-  <button mat-icon-button [matMenuTriggerFor]="menu" class="me-4" style="width:fit-content !important">
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="me-4 width">
     <span>{{viewSelected}}</span>
     <mat-icon>more_vert</mat-icon>
   </button>

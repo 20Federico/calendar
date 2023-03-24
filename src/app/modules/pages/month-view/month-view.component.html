@@ -1,8 +1,8 @@
 <mat-grid-list cols="7" rowHeight="fit" gutterSize="0"> 
-  <mat-grid-tile *ngFor="let item of days; index as i">
+  <mat-grid-tile *ngFor="let item of days; index as i" (click)="openEvent(item.date)">
     <div class="d-flex flex-column align-items-center justify-content-start h-100 spacing">
       <div>
-        <strong>{{i < 7 ? item.label.split(' ')[0] : ''}}</strong>
+        <strong>{{i < 7 ? item.label.split(' ')[0].toUpperCase() : ''}}</strong>
       </div>
       <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''">
         {{item.label.split(' ')[1]}}
@@ -10,3 +10,5 @@
     </div>
   </mat-grid-tile>
 </mat-grid-list>
+
+<app-event [visible]="eventOpen" [event]="event"></app-event>
