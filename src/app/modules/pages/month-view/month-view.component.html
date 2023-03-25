@@ -1,14 +1,14 @@
 <mat-grid-list cols="7" rowHeight="fit" gutterSize="0"> 
   <mat-grid-tile *ngFor="let item of days; index as i" (click)="openEvent(item.date)">
     <div class="d-flex flex-column align-items-center justify-content-start h-100 w-100 spacing">
-      <div>
-        <strong>{{i < 7 ? item.label.split(' ')[0].toUpperCase() : ''}}</strong>
+      <div class="week-day">
+        {{i < 7 ? item.label.split(' ')[0].toUpperCase() : ''}}
       </div>
-      <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''" class="day p-2" style="border-radius: 10px;" [routerLink]="['/day', item.date.getDate() + '-' + item.date.getMonth() + '-' + item.date.getFullYear()]">
+      <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''" class="day p-2" [routerLink]="['/day', item.date.getDate() + '-' + item.date.getMonth() + '-' + item.date.getFullYear()]">
         {{item.label.split(' ')[1]}}
       </div>
-      <div class="events w-100 align-self-start" style="overflow: auto;">
-        <div *ngFor="let el of item.events" class="event mb-1" [ngStyle]="{'background-color': el.color}" style="width:100%; cursor: pointer; font-weight: 500; font-size: 12px; background-color: yellow; color: black; border-radius: 10px; padding: 2px 10px; height: 20px; line-height: 100%;">
+      <div class="events w-100 align-self-start overflow">
+        <div *ngFor="let el of item.events" class="event" [ngStyle]="{'background-color': el.color}">
           {{el.title}}
         </div>
       </div>

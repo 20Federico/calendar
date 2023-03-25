@@ -24,7 +24,7 @@
   </div>
 
   <button mat-icon-button [matMenuTriggerFor]="menu" class="me-4 width">
-    <span>{{viewSelected}}</span>
+    <span>{{viewSelected.toUpperCase()}}</span>
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">

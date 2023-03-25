@@ -1,12 +1,11 @@
-
-<div class="p-3 w-100">
-  <div class="text-center ps-2" style="width: fit-content; height: 50px;">
-    <div>
+<div class="px-3 pt-2 pb-0 w-100 day-container">
+  <div class="text-center ps-2 day-box">
+    <span>
       <strong>{{dateSelected.label.split(' ')[0].toUpperCase()}}</strong>
-    </div>
-    <div [ngClass]="getCurrentDay() ? 'numberCircle' : ''">
+    </span>
+    <span [ngClass]="getCurrentDay() ? 'numberCircle' : ''" class="number">
       {{dateSelected.label.split(' ')[1]}}
-    </div>
+    </span>
   </div>
 </div>
 <mat-grid-list class="grid-list" cols="1" rowHeight="fit" gutterSize="0"> 
@@ -15,19 +14,19 @@
       <div class="width-50">
 
       </div>
-      <div class="d-flex flex-column justify-content-start h-100 w-100 spacing">
+      <div class="d-flex flex-column justify-content-start h-100 w-100">
         <div class="day d-flex flex-column p-0 pt-3">
           <div class="hour pe-2" *ngFor="let item of [].constructor(24); index as i">
             <div class="hours">
               {{(''+i).padStart(2, '0') + ':00'}}
             </div>
-            <div (click)="openEvent(dateSelected.date, i)" style="width: 100%; height: 100%; z-index: -1;">
+            <div (click)="openEvent(dateSelected.date, i)" class="hour-box">
               <div class="events w-100 align-self-start flex-grow-1 d-flex">
-                <div *ngFor="let el of dateSelected.events" class="w-100" style="padding-bottom: 1px;" [ngStyle]="{'padding-top': (+el.startHour.split(':')[1])/60*50+'px'}">
-                  <div *ngIf="el.startHour.split(':')[0] == (''+i).padStart(2, '0')" class="event" id="event" [ngStyle]="{'background-color': el.color}" style="border: 1px solid white; z-index: -1; width:100%; cursor: pointer; font-weight: 500; font-size: 12px; color: black; border-radius: 10px; padding: 2px 10px; line-height: 100%;">
-                    <div [ngStyle]="{'height': calcEventHeight(el.startHour, el.endHour)}" style="z-index: 1;">
-                      <div style="color: rgb(54, 53, 53);" >{{el.title}}</div>
-                      <div style="color: rgb(96, 96, 96); font-size: 11px;">{{el.startHour + '-' + el.endHour}}</div>
+                <div *ngFor="let el of dateSelected.events" class="w-100 padding-bottom" [ngStyle]="{'padding-top': (+el.startHour.split(':')[1])/60*50+'px'}">
+                  <div *ngIf="el.startHour.split(':')[0] == (''+i).padStart(2, '0')" class="event" [ngStyle]="{'background-color': el.color}">
+                    <div [ngStyle]="{'height': calcEventHeight(el.startHour, el.endHour)}">
+                      <div class="title-color" >{{el.title}}</div>
+                      <div class="title-hours">{{el.startHour + '-' + el.endHour}}</div>
                     </div>
                   </div>
                 </div>

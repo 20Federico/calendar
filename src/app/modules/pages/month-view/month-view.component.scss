@@ -4,7 +4,7 @@ mat-grid-list {
 }
 
 mat-grid-tile {
-  border: .3px solid lightgray;
+  border: .5px solid rgb(218,220,224);
 
   &:hover{
     background-color: rgba(237, 237, 237, .5);
@@ -16,8 +16,8 @@ mat-grid-tile {
 }
 
 .numberCircle {
-  font-weight: bold;
-  text-decoration: underline;
+  color: white !important;
+  background-color: rgb(74, 74, 255);
 }
 
 .example-full-width {
@@ -35,9 +35,40 @@ mat-grid-tile {
   scrollbar-width: none;  /* Firefox */
 }
 
+.overflow {
+  overflow: auto;
+}
+
 .day {
   cursor: pointer;
+  color: #70757a;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 10px;
   &:hover{
     background-color: lightgray;
+    color: #70757a !important;
+  }
+}
+
+.week-day {
+  color: #636669;
+  font-size: 12px; 
+  font-weight: 500;
+}
+
+.event {
+  width:100%; 
+  cursor: pointer; 
+  font-weight: 500; 
+  font-size: 12px; 
+  color: black; 
+  border-radius: 10px; 
+  padding: 5px 10px; 
+  height: 20px; 
+  line-height: 100%;
+  border: 1px solid white;
+  &:hover {
+    transform: scale(0.98);
   }
 }
