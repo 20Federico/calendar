@@ -1,9 +1,9 @@
 
-<div class="d-flex">
-  <div style="width: 50px;">
+<div class="d-flex overflow">
+  <div class="width-50">
   </div>
-  <mat-grid-list cols="7" rowHeight="fit" gutterSize="0" class="d-flex" style="overflow: visible;"> 
-    <mat-grid-tile *ngFor="let item of days; index as i" style="overflow:inherit;">
+  <mat-grid-list cols="7" rowHeight="fit" gutterSize="0" class="d-flex" class="overflow-visible"> 
+    <mat-grid-tile *ngFor="let item of days; index as i" class="overflow-inherit">
       <div class="d-flex flex-column align-items-center justify-content-start h-100 w-100 spacing">
         <div class="text-center">
           <div>
@@ -13,9 +13,9 @@
             {{item.label.split(' ')[1]}}
           </div>
         </div>
-        <div style="width:100%; flex-grow: 1; overflow: visible;" class="d-flex flex-column">
-          <div class="hour" style="height: 50px; border: 1px solid lightgray; border-top: none;" *ngFor="let el of [].constructor(24); index as r" (click)="openEvent(item.date, r)">
-            <div *ngIf="i==0" style="font-size: 10px; color: rgb(139, 138, 138); line-height: 100%; position:relative; top: -5px; right: 30px; z-index: 100;" >
+        <div class="hours d-flex flex-column">
+          <div class="hour" *ngFor="let el of [].constructor(24); index as r" (click)="openEvent(item.date, r)">
+            <div class="time" *ngIf="i==0" >
               {{(''+r).padStart(2, '0') + ':00'}}
             </div>
           </div>

@@ -1,6 +1,6 @@
-<div *ngIf="visible" style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 50%; height: 50vh; z-index: 1000;">
-  <mat-card style="box-shadow: 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12), 0 11px 15px -7px rgba(0,0,0,.2);">
-    <mat-card-content class="d-flex flex-column">
+<div *ngIf="visible" class="container">
+  <mat-card class="event-card">
+    <mat-card-content>
       <mat-card-title>
         <mat-form-field class="example-form-field" class="w-100">
           <mat-label>Aggiungi un titolo</mat-label>
@@ -13,13 +13,20 @@
       <mat-form-field appearance="fill" class="w-100">
         <mat-label>Descrizione...</mat-label>
         <input matInput [(ngModel)]="event.description">
-      </mat-form-field>   
-      <mat-form-field appearance="fill" class="w-50">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill" class="w-50">
         <mat-label>Scegli una data</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" [value]="event.date">
-        <mat-datepicker-toggle matIconSuffix [for]="picker" class="w-25"></mat-datepicker-toggle>
-        <mat-datepicker #picker startView="month" [startAt]="event.date"></mat-datepicker>
-        <mat-hint>MM/DD/YYYY</mat-hint>
+        <div class="d-flex align-items-center">
+          <div class="flex-grow-1">
+            <input hidden matInput [matDatepicker]="picker" [(ngModel)]="event.date"> 
+            <input class="date" disabled matInput [value]="week[event.date.getDay()]+' '+event.date.getDate()+' '+months[event.date.getMonth()]+' '+ event.date.getFullYear()"> 
+          </div>
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+        </div>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       
       <div class="d-flex">
@@ -49,6 +56,4 @@
       <button mat-button (click)="visible = false">SALVA</button>
     </mat-card-actions>
   </mat-card>
-  
-
 </div>

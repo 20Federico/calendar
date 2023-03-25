@@ -1,0 +1,17 @@
+.container {
+  position: absolute; 
+  top: 40%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 50%; 
+  height: 50vh; 
+  z-index: 1000;
+}
+
+.event-card {
+  box-shadow: 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12), 0 11px 15px -7px rgba(0,0,0,.2);
+}
+
+.date:disabled{
+  color: black;
+}

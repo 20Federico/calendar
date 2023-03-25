@@ -12,8 +12,45 @@ mat-grid-list {
   padding: 10px 0;
 }
 
+.hours {
+  width:100%; 
+  flex-grow: 1; 
+  overflow: visible;
+}
+
 .hour {
+  height: 50px; 
+  border: 1px solid lightgray; 
+  border-top: none;
+
   &:hover{
     background-color: rgba(237, 237, 237, .5);
   }
+}
+
+.overflow {
+  overflow: auto;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+.width-50 {
+  width: 50px;
+}
+
+.overflow-inherit {
+  overflow: inherit;
+}
+
+.time {
+  font-size: 10px; 
+  color: rgb(139, 138, 138); 
+  line-height: 100%; 
+  position:relative; 
+  top: -5px; 
+  right: 
+  30px; 
+  z-index: 100;
 }

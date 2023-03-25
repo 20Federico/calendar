@@ -21,12 +21,8 @@ export class EventComponent implements OnInit {
     endHour: '9:00',
     color: '#BFBFBF'};
 
-  // eventTitle = '';
-  // description = '';
-  // dateSelected: any;
-  // startTimeSelected: any;
-  // finishTimeSelected: any;
-  // colorSelected = '#BFBFBF';
+  week = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
+  months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
 
   constructor() { }
 
@@ -64,8 +60,6 @@ export class EventComponent implements OnInit {
           setTimeout(()=>this.event.startHour = this.event.endHour, 0);
         }
     } 
-    
-    
   }
 
 }
