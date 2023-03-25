@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.date-picker {
+  visibility: hidden;
+  width: 0;
+}
+
 mat-toolbar {
   height: 60px;
 }
