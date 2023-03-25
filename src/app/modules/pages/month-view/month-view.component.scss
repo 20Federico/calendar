@@ -12,7 +12,7 @@ mat-grid-tile {
 }
 
 .spacing {
-  padding: 10px 0;
+  padding: 10px 10px;
 }
 
 .numberCircle {
@@ -23,4 +23,21 @@ mat-grid-tile {
 .example-full-width {
   max-width: 30%;
   width: 20%;
+}
+
+.events::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.events {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.day {
+  cursor: pointer;
+  &:hover{
+    background-color: lightgray;
+  }
 }

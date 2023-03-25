@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventsService } from '../../services/events-service.service';
 
 @Component({
   selector: 'app-week-view',
@@ -9,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class WeekViewComponent implements OnInit {
 
   startDate: string = '';
-  days: { label: string; date: Date; }[] = [];
+  days: { label: string; date: Date; events:any }[] = [];
   eventOpen = false;
   event: {
     title: string,
@@ -26,21 +27,19 @@ export class WeekViewComponent implements OnInit {
     endHour: '09:00',
     color: '#BFBFBF'
   }
+  eventsList: any;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private eventsService: EventsService
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params=>{
       this.startDate = params['startDate'];
       this.createGrid();
-      this.getEvents();
     })
-  }
-
-  getEvents() {
-
   }
 
   createGrid() {
@@ -56,12 +55,30 @@ export class WeekViewComponent implements OnInit {
         {
           label: week[new Date(startDate).getDay()] + ' ' + new Date(startDate).getDate(),
           date: new Date(startDate),
+          events: []
         }  
       );
       startDate.setDate(startDate.getDate() + 1);
     }
     this.days = days;
     
+    this.getEvents(this.days[0].date.toISOString(), this.days[this.days.length-1].date.toISOString());
+  }
+
+  getEvents(startDate: string, endDate: string) {
+    // mock che restituisce array di oggetti evento
+    this.eventsList = this.eventsService.getEvents(startDate, endDate);
+
+    //display events
+    for (let i = 0; i < this.days.length; i++) {
+      const day = this.days[i];
+      for (let r = 0; r < this.eventsList.length; r++) {
+        const event = this.eventsList[r];
+        if (event.date == day.date.toISOString()) {
+          day.events.push(event)
+        }
+      }
+    }
   }
 
   getCurrentDay(item: any) {
@@ -71,9 +88,18 @@ export class WeekViewComponent implements OnInit {
   }
 
   openEvent(date: Date, hour:number) {
+    this.event.title = '',
+    this.event.description = '',
     this.event.date = new Date(date);
     this.event.startHour = (''+hour).padStart(2,'0')+':00';
     this.event.endHour = (1+hour+'').padStart(2,'0')+':00';
+    this.event.color = '#BFBFBF';
     this.eventOpen = !this.eventOpen;
+  }
+
+  calcEventHeight(startHour: string, endHour:string) {
+    let minutes = (+endHour.split(':')[0] - +startHour.split(':')[0])*60 - (+startHour.split(':')[1]) + +endHour.split(':')[1];
+    let height = minutes / 60*50 + 'px';
+    return height;
   }
 }

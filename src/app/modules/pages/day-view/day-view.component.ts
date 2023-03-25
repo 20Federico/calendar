@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EventsService } from '../../services/events-service.service';
 
 @Component({
   selector: 'app-day-view',
@@ -26,21 +27,18 @@ export class DayViewComponent implements OnInit {
     endHour: '09:00',
     color: '#BFBFBF'
   };
+  eventsList: any;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private eventsService: EventsService 
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params=>{
       this.startDate = params['startDate'];
       this.createGrid();
-      this.getEvents();
     })
-  }
-
-  getEvents() {
-
   }
 
   createGrid() {
@@ -51,8 +49,23 @@ export class DayViewComponent implements OnInit {
     this.dateSelected = 
     {
       label: week[new Date(date).getDay()] + ' ' + new Date(date).getDate(),
-      date: new Date(date)
+      date: new Date(date),
+      events: []
     }  
+
+    this.getEvents(this.dateSelected.date.toISOString(), this.dateSelected.date.toISOString());
+  }
+  
+  getEvents(startDate: string, endDate: string) {
+    // mock che restituisce array di oggetti evento
+    this.eventsList = this.eventsService.getEvents(startDate, endDate);
+
+    //display events
+    for (let r = 0; r < this.eventsList.length; r++) {
+      const event = this.eventsList[r];
+      
+      this.dateSelected.events.push(event)
+    }
   }
 
   getCurrentDay() {
@@ -61,10 +74,21 @@ export class DayViewComponent implements OnInit {
     return today == itemDate;
   }
 
-  openEvent(date: Date, hour:number) {
+  openEvent(date: Date, hour:number) {    
+    this.event.title = '',
+    this.event.description = '',
     this.event.date = new Date(date);
+    console.log(this.event.date);
     this.event.startHour = (''+hour).padStart(2,'0')+':00';
     this.event.endHour = (1+hour+'').padStart(2,'0')+':00';
+    this.event.color = '#BFBFBF';
     this.eventOpen = !this.eventOpen;
+    console.log(this.eventOpen);
+  }
+
+  calcEventHeight(startHour: string, endHour:string) {
+    let minutes = (+endHour.split(':')[0] - +startHour.split(':')[0])*60 + (+endHour.split(':')[1] - +startHour.split(':')[1]);
+    let height = 50*minutes / 60 + 'px';
+    return height;
   }
 }

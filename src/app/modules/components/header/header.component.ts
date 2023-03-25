@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -15,10 +15,21 @@ export class HeaderComponent implements OnInit {
   
   startDate = new Date();
   viewSelected = 'Mese';
+  currentRoute = '';
 
   constructor(
-    private router: Router
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+      this.currentRoute = "";
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationEnd) {
+            this.currentRoute = event.url;   
+            this.viewSelected = this.currentRoute.split('/')[1] == 'month' ? 'Mese' : this.currentRoute.split('/')[1] == 'week' ? 'Settimana' : 'Giorno';  
+            this.startDate = new Date(+(this.currentRoute.split('/')[2]).split('-')[2], +(this.currentRoute.split('/')[2]).split('-')[1], +(this.currentRoute.split('/')[2]).split('-')[0]);
+        }
+    });
+  }
 
   ngOnInit(): void {
   }
@@ -62,7 +73,7 @@ export class HeaderComponent implements OnInit {
       if (next) {
         this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()+1);
       } else {
-        this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()+1);
+        this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()-1);
       }
       this.router.navigate(['day', this.startDate.getDate() + '-' + this.startDate.getMonth() + '-' + this.startDate.getFullYear()]);
     }

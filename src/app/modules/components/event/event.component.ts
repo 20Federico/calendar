@@ -1,22 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
-
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { EventsService } from '../../services/events-service.service';
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent implements OnInit {
+  @Output() onSave = new EventEmitter<any>();
   @Input() visible: boolean = false;
   @Input() event: {
     title: string,
     description: string,
-    date: Date,
+    date: any,
     startHour: string,
     endHour: string,
     color: string
   } = {title: '',
     description: '',
-    date: new Date(),
+    date: '',
     startHour: '8:00',
     endHour: '9:00',
     color: '#BFBFBF'};
@@ -24,11 +25,11 @@ export class EventComponent implements OnInit {
   week = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
   months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
 
-  constructor() { }
+  constructor(
+    private eventsService: EventsService
+  ) { }
 
   ngOnInit(): void {
-    console.log('event component start');
-    
   }
 
   generateHourList() {
@@ -60,6 +61,15 @@ export class EventComponent implements OnInit {
           setTimeout(()=>this.event.startHour = this.event.endHour, 0);
         }
     } 
+  }
+
+  saveEvent() {
+    if (this.event.title == '') {
+      this.event.title = '(senza titolo)'
+    }
+    this.event.date = new Date(this.event.date).toISOString();
+    this.onSave.emit(this.event);
+    this.visible = false;
   }
 
 }

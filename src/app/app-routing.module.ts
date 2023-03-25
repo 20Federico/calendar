@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HeaderComponent } from './modules/components/header/header.component';
 import { DayViewComponent } from './modules/pages/day-view/day-view.component';
 import { MonthViewComponent } from './modules/pages/month-view/month-view.component';
 import { WeekViewComponent } from './modules/pages/week-view/week-view.component';

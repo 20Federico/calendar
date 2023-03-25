@@ -3,9 +3,9 @@ mat-grid-list {
   width: 100vw;
 }
 
-.spacing {
-  padding: 10px 0;
-}
+// .spacing {
+//   // padding: 10px 0;
+// }
 
 .numberCircle {
   font-weight: bold;
@@ -33,6 +33,7 @@ mat-grid-list {
   height: 50px; 
   border: 1px solid lightgray; 
   border-top: none;
+  position: relative;
   &:hover{
     background-color: rgba(237, 237, 237, 0.5);
   }
@@ -46,4 +47,18 @@ mat-grid-list {
   top: -5px; 
   right: 30px; 
   z-index: 100;
+  width: fit-content;
+}
+
+.events {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.event {
+  pointer-events:none;
+}
+.event:hover {
+  transform: scale(1.1);
+  
 }

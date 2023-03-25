@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EventsService } from '../../services/events-service.service';
 
 @Component({
   selector: 'app-month-view',
@@ -26,18 +27,19 @@ export class MonthViewComponent implements OnInit {
     endHour: '09:00',
     color: '#BFBFBF'
   };
+  eventsList:any;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private eventsService: EventsService
   ) {
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.route.params.subscribe(params=>{
       this.startDate = params['startDate'];
 
       this.createGrid();
-      this.getEvents();
     })
   }
 
@@ -60,6 +62,7 @@ export class MonthViewComponent implements OnInit {
           label: week[new Date(date).getDay()].slice(0, 3) + ' ' + new Date(date).getDate(),
           date: new Date(date),
           disabled: false,
+          events: []
         }  
       );
       date.setDate(date.getDate() + 1);
@@ -79,7 +82,8 @@ export class MonthViewComponent implements OnInit {
           {
             label: week[new Date(firstMonday).getDay()].slice(0, 3) + ' ' + new Date(firstMonday).getDate(),
             date: new Date(firstMonday),
-            disabled: true
+            disabled: true,
+            events: []
           }  
         )
         firstMonday = new Date(firstMonday.getFullYear(), firstMonday.getMonth(), firstMonday.getDate()+1);
@@ -95,22 +99,46 @@ export class MonthViewComponent implements OnInit {
           {
             label: week[new Date(lastDay).getDay()].slice(0, 3) + ' ' + new Date(lastDay).getDate(),
             date: new Date(lastDay),
-            disabled: true
+            disabled: true,
+            events: []
           }  
         )
       }      
       this.days = this.days.concat(afterDays);
     }
+
+    this.getEvents(this.days[0].date.toISOString(), this.days[this.days.length-1].date.toISOString());
   }
 
   
-  getEvents() {
+  getEvents(startDate: string, endDate: string) {
     // mock che restituisce array di oggetti evento
+    this.eventsList = this.eventsService.getEvents(startDate, endDate);
+
     //display events
+    for (let i = 0; i < this.days.length; i++) {
+      const day = this.days[i];
+      for (let r = 0; r < this.eventsList.length; r++) {
+        const event = this.eventsList[r];
+        if (event.date == day.date.toISOString()) {
+          day.events.push(event)
+        }
+      }
+    }
   }
 
   openEvent(date: Date) {
+    this.event.title = '',
+    this.event.description = '',
     this.event.date = new Date(date);
-    this.eventOpen = !this.eventOpen;
+    this.event.startHour = '08:00';
+    this.event.endHour = '09:00';
+    this.event.color = '#BFBFBF';
+    this.eventOpen = true;
+  }
+
+  saveEvent(event: any) {
+    this.eventsService.createEvent(event);
+    this.createGrid();
   }
 }

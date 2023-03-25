@@ -1,3 +1,4 @@
+import { EventsService } from './modules/services/events-service.service';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,7 +20,9 @@ import { PagesModule } from './modules/pages/pages.module';
     MaterialComponentsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    EventsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

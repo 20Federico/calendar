@@ -5,23 +5,30 @@
   <mat-grid-list cols="7" rowHeight="fit" gutterSize="0" class="d-flex" class="overflow-visible"> 
     <mat-grid-tile *ngFor="let item of days; index as i" class="overflow-inherit">
       <div class="d-flex flex-column align-items-center justify-content-start h-100 w-100 spacing">
-        <div class="text-center">
+        <div class="text-center date p-2" [routerLink]="['/day', item.date.getDate() + '-' + item.date.getMonth() + '-' + item.date.getFullYear()]">
           <div>
-            <strong>{{i < 7 ? item.label.split(' ')[0].toUpperCase() : ''}}</strong>
-          </div>
-          <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''">
-            {{item.label.split(' ')[1]}}
-          </div>
+              <strong>{{i < 7 ? item.label.split(' ')[0].toUpperCase() : ''}}</strong>
+            </div>
+            <div [ngClass]="getCurrentDay(item) ? 'numberCircle' : ''">
+              {{item.label.split(' ')[1]}}
+            </div>
         </div>
         <div class="hours d-flex flex-column">
-          <div class="hour" *ngFor="let el of [].constructor(24); index as r" (click)="openEvent(item.date, r)">
-            <div class="time" *ngIf="i==0" >
+          <div class="hour pe-2" *ngFor="let el of [].constructor(24); index as r" (click)="openEvent(item.date, r)">
+            <div class="time" *ngIf="i==0">
               {{(''+r).padStart(2, '0') + ':00'}}
             </div>
+            <div class="events w-100 align-self-start d-flex pe-2" style="overflow: auto;">
+              <div *ngFor="let el of item.events" class="w-100" [ngStyle]="{'padding-top': (+el.startHour.split(':')[1])/60*50+'px'}">
+                <div *ngIf="el.startHour.split(':')[0] == (''+r).padStart(2, '0')" class="event" [ngStyle]="{'background-color': el.color}" style="border:1px solid white; width:100%; cursor: pointer; font-weight: 500; font-size: 12px; color: black; border-radius: 10px; padding: 2px 10px; height: 20px; line-height: 100%; height: fit-content;">
+                  <div style="overflow: hidden;" [ngStyle]="{'height': calcEventHeight(el.startHour, el.endHour)}" (click)="openEvent(el.date, r)">
+                    <div style="color: rgb(54, 53, 53);" >{{el.title}}</div>
+                    <div style="color: rgb(96, 96, 96); font-size: 11px;">{{el.startHour + '-' + el.endHour}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- <div class="event" style="cursor: pointer; font-weight: 500; background-color: yellow; color: black; border-radius: 10px; padding: 2px 10px; height: 20px; width: 100%; line-height: 100%;">
-            ciao sono un evento
-          </div> -->
         </div>
       </div>
     </mat-grid-tile>

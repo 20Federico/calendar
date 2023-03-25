@@ -14,6 +14,7 @@ import { EventComponent } from './event/event.component';
   imports: [
     CommonModule,
     MaterialComponentsModule,
+    FormsModule,
     RouterModule,
     FormsModule
   ],

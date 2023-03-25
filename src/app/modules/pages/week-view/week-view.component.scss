@@ -16,12 +16,15 @@ mat-grid-list {
   width:100%; 
   flex-grow: 1; 
   overflow: visible;
+  position: relative;
 }
 
 .hour {
   height: 50px; 
   border: 1px solid lightgray; 
   border-top: none;
+  position: relative;
+
 
   &:hover{
     background-color: rgba(237, 237, 237, .5);
@@ -53,4 +56,28 @@ mat-grid-list {
   right: 
   30px; 
   z-index: 100;
+}
+
+.events {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.events::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.events {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.date {
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: lightgray;
+  }
 }
