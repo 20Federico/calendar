@@ -60,14 +60,15 @@ export class DayViewComponent implements OnInit {
   
   getEvents(startDate: string, endDate: string) {
     // mock che restituisce array di oggetti evento
-    this.eventsList = this.eventsService.getEvents(startDate, endDate);
-
-    //display events
-    for (let r = 0; r < this.eventsList.length; r++) {
-      const event = this.eventsList[r];
+    this.eventsService.getEvents(startDate, endDate).subscribe((events)=>{
+      this.eventsList = events;
+      //display events
+      for (let r = 0; r < this.eventsList.length; r++) {
+        const event = this.eventsList[r];
       
-      this.dateSelected.events.push(event)
-    }
+        this.dateSelected.events.push(event)
+      }      
+    });
   }
 
   getCurrentDay() {
@@ -104,5 +105,20 @@ export class DayViewComponent implements OnInit {
     let minutes = (+endHour.split(':')[0] - +startHour.split(':')[0])*60 + (+endHour.split(':')[1] - +startHour.split(':')[1]);
     let height = 50*minutes / 60 + 'px';
     return height;
+  }
+
+  saveEvent(event: any) {
+    if (event.id) {
+      this.eventsService.updateEvent(event);
+    } else {
+      event.id = Math.random();
+      this.eventsService.createEvent(event);
+    }
+    this.createGrid();
+  }
+
+  deleteEvent(id: number) {
+    this.eventsService.deleteEvent(id);
+    this.createGrid();
   }
 }

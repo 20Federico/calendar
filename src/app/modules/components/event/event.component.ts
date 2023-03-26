@@ -6,6 +6,7 @@ import { EventsService } from '../../services/events-service.service';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent implements OnInit {
+  @Output() delete = new EventEmitter<any>();
   @Output() onSave = new EventEmitter<any>();
   @Output() close = new EventEmitter<any>();
   @Input() event: {
@@ -70,15 +71,13 @@ export class EventComponent implements OnInit {
     if (this.event.title == '') {
       this.event.title = '(senza titolo)'
     }
-    this.event.date = new Date(this.event.date).toISOString();
-    this.onSave.emit(this.event);
+    this.onSave.emit(this.event);    
     this.close.emit(true)
-
-    //se c'è id modifica, altrimenti crea
   }
 
-  deleteEvent() {
-    //delete event
+  deleteEvent(id: number) {
+    this.delete.emit(id);
+    this.close.emit(true);
   }
 
   closeEvent() {

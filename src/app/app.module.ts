@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ComponentsModule } from './modules/components/components.module';
 import { MaterialComponentsModule } from './modules/material/material-components.module';
 import { PagesModule } from './modules/pages/pages.module';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,8 @@ import { PagesModule } from './modules/pages/pages.module';
     PagesModule,
     ComponentsModule,
     MaterialComponentsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     EventsService

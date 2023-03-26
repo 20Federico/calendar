@@ -69,18 +69,19 @@ export class WeekViewComponent implements OnInit {
 
   getEvents(startDate: string, endDate: string) {
     // mock che restituisce array di oggetti evento
-    this.eventsList = this.eventsService.getEvents(startDate, endDate);
-
-    //display events
-    for (let i = 0; i < this.days.length; i++) {
-      const day = this.days[i];
-      for (let r = 0; r < this.eventsList.length; r++) {
-        const event = this.eventsList[r];
-        if (event.date == day.date.toISOString()) {
-          day.events.push(event)
+    this.eventsService.getEvents(startDate, endDate).subscribe((events)=>{
+      this.eventsList = events;
+      //display events
+      for (let i = 0; i < this.days.length; i++) {
+        const day = this.days[i];
+        for (let r = 0; r < this.eventsList.length; r++) {
+          const event = this.eventsList[r];
+          if (event.date == day.date.toISOString()) {
+            day.events.push(event)
+          }
         }
-      }
-    }
+      }      
+    });
   }
 
   getCurrentDay(item: any) {
@@ -116,5 +117,20 @@ export class WeekViewComponent implements OnInit {
     let minutes = (+endHour.split(':')[0] - +startHour.split(':')[0])*60 - (+startHour.split(':')[1]) + +endHour.split(':')[1];
     let height = minutes / 60*50 + 'px';
     return height;
+  }
+
+  saveEvent(event: any) {
+    if (event.id) {
+      this.eventsService.updateEvent(event);
+    } else {
+      event.id = Math.random();
+      this.eventsService.createEvent(event);
+    }
+    this.createGrid();
+  }
+
+  deleteEvent(id: number) {
+    this.eventsService.deleteEvent(id);
+    this.createGrid();
   }
 }

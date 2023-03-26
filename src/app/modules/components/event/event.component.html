@@ -49,7 +49,7 @@
     <mat-divider></mat-divider>
 
     <mat-card-actions align="end">
-      <button *ngIf="event.id" mat-button (click)="deleteEvent()">ELIMINA</button>
+      <button *ngIf="event.id" mat-button (click)="deleteEvent(event.id)">ELIMINA</button>
       <button mat-button (click)="closeEvent()">CHIUDI</button>
       <button mat-button (click)="saveEvent()">SALVA</button>
     </mat-card-actions>

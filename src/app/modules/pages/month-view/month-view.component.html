@@ -16,4 +16,4 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<app-event (onSave)="saveEvent($event)" (close)="eventOpen = false" *ngIf="eventOpen" [event]="event"></app-event>
+<app-event (onSave)="saveEvent($event)" (delete)="deleteEvent($event)" (close)="eventOpen = false" *ngIf="eventOpen" [event]="event"></app-event>

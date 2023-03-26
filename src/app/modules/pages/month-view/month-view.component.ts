@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventsService } from '../../services/events-service.service';
@@ -115,18 +116,18 @@ export class MonthViewComponent implements OnInit {
   
   getEvents(startDate: string, endDate: string) {
     // mock che restituisce array di oggetti evento
-    this.eventsList = this.eventsService.getEvents(startDate, endDate);
-
-    //display events
-    for (let i = 0; i < this.days.length; i++) {
-      const day = this.days[i];
-      for (let r = 0; r < this.eventsList.length; r++) {
-        const event = this.eventsList[r];
-        if (event.date == day.date.toISOString()) {
-          day.events.push(event)
+    this.eventsService.getEvents(startDate, endDate).subscribe((events)=>{
+      this.eventsList = events;
+      for (let i = 0; i < this.days.length; i++) {
+        const day = this.days[i];
+        for (let r = 0; r < this.eventsList.length; r++) {
+          const event = this.eventsList[r];
+          if (event.date == day.date.toISOString()) {
+            day.events.push(event)
+          }
         }
-      }
-    }
+      }      
+    });
   }
 
   openEvent(date: Date, event?:any) { 
@@ -154,7 +155,18 @@ export class MonthViewComponent implements OnInit {
   }
 
   saveEvent(event: any) {
-    this.eventsService.createEvent(event);
+    if (event.id) {
+      this.eventsService.updateEvent(event);
+    } else {
+      event.id = Math.random();
+      this.eventsService.createEvent(event);
+    }
     this.createGrid();
   }
+
+  deleteEvent(id: number) {
+    this.eventsService.deleteEvent(id);
+    this.createGrid();
+  }
+
 }
