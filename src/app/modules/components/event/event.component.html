@@ -1,13 +1,10 @@
-<div *ngIf="visible" class="container">
+<div class="container">
   <mat-card class="event-card">
     <mat-card-content>
       <mat-card-title>
         <mat-form-field class="example-form-field" class="w-100">
           <mat-label>Aggiungi un titolo</mat-label>
           <input matInput [(ngModel)]="event.title" type="text">
-          <button *ngIf="event.title" matSuffix mat-icon-button aria-label="Clear">
-            <mat-icon>close</mat-icon>
-          </button>
         </mat-form-field>
       </mat-card-title>
       <mat-form-field appearance="fill" class="w-100">
@@ -52,7 +49,8 @@
     <mat-divider></mat-divider>
 
     <mat-card-actions align="end">
-      <button mat-button (click)="visible = false">CHIUDI</button>
+      <button *ngIf="event.id" mat-button (click)="deleteEvent()">ELIMINA</button>
+      <button mat-button (click)="closeEvent()">CHIUDI</button>
       <button mat-button (click)="saveEvent()">SALVA</button>
     </mat-card-actions>
   </mat-card>

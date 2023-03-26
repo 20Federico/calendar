@@ -24,7 +24,7 @@
               <div class="events w-100 align-self-start flex-grow-1 d-flex">
                 <div *ngFor="let el of dateSelected.events" class="w-100 padding-bottom" [ngStyle]="{'padding-top': (+el.startHour.split(':')[1])/60*50+'px'}">
                   <div *ngIf="el.startHour.split(':')[0] == (''+i).padStart(2, '0')" class="event" [ngStyle]="{'background-color': el.color}">
-                    <div [ngStyle]="{'height': calcEventHeight(el.startHour, el.endHour)}">
+                    <div [ngStyle]="{'height': calcEventHeight(el.startHour, el.endHour)}" (click)="openEvent(el.date, i, el); $event.stopPropagation();">
                       <div class="title-color" >{{el.title}}</div>
                       <div class="title-hours">{{el.startHour + '-' + el.endHour}}</div>
                     </div>
@@ -39,4 +39,4 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<app-event [visible]="eventOpen" [event]="event"></app-event>
+<app-event *ngIf="eventOpen" (close)="eventOpen = false" [event]="event"></app-event>

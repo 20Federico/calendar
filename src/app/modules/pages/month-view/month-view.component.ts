@@ -18,14 +18,16 @@ export class MonthViewComponent implements OnInit {
     date: Date,
     startHour: string,
     endHour: string,
-    color: string
+    color: string,
+    id: number | undefined
   } = {
     title: '',
     description: '',
     date: new Date(),
     startHour: '08:00',
     endHour: '09:00',
-    color: '#BFBFBF'
+    color: '#BFBFBF',
+    id: undefined
   };
   eventsList:any;
 
@@ -127,13 +129,27 @@ export class MonthViewComponent implements OnInit {
     }
   }
 
-  openEvent(date: Date) {
+  openEvent(date: Date, event?:any) { 
+    this.eventOpen = false;
+
     this.event.title = '',
     this.event.description = '',
     this.event.date = new Date(date);
     this.event.startHour = '08:00';
     this.event.endHour = '09:00';
     this.event.color = '#BFBFBF';
+    this.event.id = undefined;
+
+    if (event) {
+      this.event.title = event.title;
+      this.event.description = event.description;
+      this.event.date = new Date(event.date);
+      this.event.startHour = event.startHour;
+      this.event.endHour = event.endHour;
+      this.event.color = event.color;
+      this.event.id = event.id;
+    }
+
     this.eventOpen = true;
   }
 

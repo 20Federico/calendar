@@ -7,20 +7,23 @@ import { EventsService } from '../../services/events-service.service';
 })
 export class EventComponent implements OnInit {
   @Output() onSave = new EventEmitter<any>();
-  @Input() visible: boolean = false;
+  @Output() close = new EventEmitter<any>();
   @Input() event: {
     title: string,
     description: string,
     date: any,
     startHour: string,
     endHour: string,
-    color: string
+    color: string,
+    id: number | undefined
   } = {title: '',
     description: '',
     date: '',
     startHour: '8:00',
     endHour: '9:00',
-    color: '#BFBFBF'};
+    color: '#BFBFBF',
+    id: undefined
+  };
 
   week = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
   months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
@@ -69,7 +72,17 @@ export class EventComponent implements OnInit {
     }
     this.event.date = new Date(this.event.date).toISOString();
     this.onSave.emit(this.event);
-    this.visible = false;
+    this.close.emit(true)
+
+    //se c'è id modifica, altrimenti crea
+  }
+
+  deleteEvent() {
+    //delete event
+  }
+
+  closeEvent() {
+    this.close.emit(true)
   }
 
 }

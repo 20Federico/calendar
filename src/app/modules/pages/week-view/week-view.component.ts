@@ -18,14 +18,16 @@ export class WeekViewComponent implements OnInit {
     date: Date,
     startHour: string,
     endHour: string,
-    color: string
+    color: string,
+    id: number | undefined
   } = {
     title: '',
     description: '',
     date: new Date(),
     startHour: '08:00',
     endHour: '09:00',
-    color: '#BFBFBF'
+    color: '#BFBFBF',
+    id: undefined
   }
   eventsList: any;
 
@@ -87,14 +89,27 @@ export class WeekViewComponent implements OnInit {
     return today == itemDate;
   }
 
-  openEvent(date: Date, hour:number) {
+  openEvent(date: Date, hour:number, event?:any) {
+    this.eventOpen = false;
+
     this.event.title = '',
     this.event.description = '',
     this.event.date = new Date(date);
     this.event.startHour = (''+hour).padStart(2,'0')+':00';
     this.event.endHour = (1+hour+'').padStart(2,'0')+':00';
     this.event.color = '#BFBFBF';
-    this.eventOpen = !this.eventOpen;
+    this.event.id = undefined;
+    
+    if (event) {
+      this.event.title = event.title;
+      this.event.description = event.description;
+      this.event.date = new Date(event.date);
+      this.event.startHour = event.startHour;
+      this.event.endHour = event.endHour;
+      this.event.color = event.color;
+      this.event.id = event.id;
+    }
+    this.eventOpen = true;
   }
 
   calcEventHeight(startHour: string, endHour:string) {

@@ -8,12 +8,12 @@
         {{item.label.split(' ')[1]}}
       </div>
       <div class="events w-100 align-self-start overflow">
-        <div *ngFor="let el of item.events" class="event" [ngStyle]="{'background-color': el.color}">
-          {{el.title}}
-        </div>
+        <button *ngFor="let el of item.events" class="event" (click)="openEvent(el.date, el); ; $event.stopPropagation();" style="z-index: 115;" [ngStyle]="{'background-color': el.color}">
+            {{el.title}}
+        </button>
       </div>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
 
-<app-event (onSave)="saveEvent($event)" [visible]="eventOpen" [event]="event"></app-event>
+<app-event (onSave)="saveEvent($event)" (close)="eventOpen = false" *ngIf="eventOpen" [event]="event"></app-event>
