@@ -30,5 +30,6 @@
     "strictTemplates": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }
