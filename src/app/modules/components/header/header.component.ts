@@ -19,14 +19,20 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
   ) {
       this.currentRoute = "";
       this.router.events.subscribe((event: Event) => {
         if (event instanceof NavigationEnd) {
-            this.currentRoute = event.url;   
-            this.viewSelected = this.currentRoute.split('/')[1] == 'month' ? 'Mese' : this.currentRoute.split('/')[1] == 'week' ? 'Settimana' : 'Giorno';  
-            this.startDate = new Date(+(this.currentRoute.split('/')[2]).split('-')[2], +(this.currentRoute.split('/')[2]).split('-')[1], +(this.currentRoute.split('/')[2]).split('-')[0]);
+            this.currentRoute = event.url; 
+            const view = this.currentRoute?.split('/')[1];
+            if (view) {
+              this.viewSelected = this.currentRoute?.split('/')[1] == 'month' ? 'Mese' : this.currentRoute?.split('/')[1] == 'week' ? 'Settimana' : 'Giorno';  
+            }
+            const date = this.currentRoute?.split('/')[2];
+            const dateSplit = date?.split('-');
+            if (date) {
+              this.startDate = new Date(dateSplit? +dateSplit[2] : 2025, dateSplit ? +dateSplit[1]:1, dateSplit? +dateSplit[0]: 1);
+            }
         }
     });
   }
