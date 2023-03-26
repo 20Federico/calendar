@@ -48,8 +48,8 @@ export class WeekViewComponent implements OnInit {
     let date = new Date(+this.startDate.split('-')[2], +this.startDate.split('-')[1], +this.startDate.split('-')[0]);
     let days = [];
 
-    let startDate = new Date(date.getFullYear(), date.getMonth(), 1+date.getDate()-date.getDay())
-    let endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-date.getDay())
+    let startDate = new Date(date.getFullYear(), date.getMonth(), 1+date.getDate()-(date.getDay()== 0? 7: date.getDay()))
+    let endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7-(date.getDay()== 0? 7: date.getDay()))
     while (startDate <= endDate) {
       days.push(
         {
