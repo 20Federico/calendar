@@ -16,8 +16,6 @@ export class EventsService {
         events.push(ev);
       }
     }
-    console.log(events);
-    
     return events;
   }
 

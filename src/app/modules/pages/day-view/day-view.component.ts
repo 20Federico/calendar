@@ -78,12 +78,10 @@ export class DayViewComponent implements OnInit {
     this.event.title = '',
     this.event.description = '',
     this.event.date = new Date(date);
-    console.log(this.event.date);
     this.event.startHour = (''+hour).padStart(2,'0')+':00';
     this.event.endHour = (1+hour+'').padStart(2,'0')+':00';
     this.event.color = '#BFBFBF';
     this.eventOpen = !this.eventOpen;
-    console.log(this.eventOpen);
   }
 
   calcEventHeight(startHour: string, endHour:string) {
