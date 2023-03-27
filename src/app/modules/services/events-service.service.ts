@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 export interface Event {
   title: string,
   description: string,
-  date: Date,
+  date: string,
   startHour: string,
   endHour: string,
   color: string,
@@ -18,62 +18,55 @@ export interface Event {
   providedIn: 'root'
 })
 export class EventsService {
-  private events$ = new BehaviorSubject<Event[]>([]);
+  private events = new BehaviorSubject<Event[]>([]);
+  private events$ = this.events.asObservable();
+
   constructor(private http: HttpClient) { }
 
   public init(): void {    
     this.http
       .get<Event[]>('http://localhost:3000/eventsList')
       .subscribe((events: Event[])=> {
-        this.events$.next(events)
+        this.events.next(events)
       })
   }
 
-  public getAllEvents() {
+  public getAllEvents(): Observable<Event[]> {
     return this.events$;
   }
 
   public getEvents(startDate: string, endDate: string): Observable<Event[]> {
-    return this.events$.pipe(
+    this.events.pipe(
       map((events:Event[])=> events.filter((ev)=>new Date(ev.date)>=new Date(startDate)&&new Date(ev.date)<=new Date(endDate)))
     );
+    return this.events$; 
   }
 
-  // public createEvent(): Observable<Event[]> {
-  //   return this.events$.push(
-  //     ((events:Event[])=> events.filter((ev)=>new Date(ev.date)>=new Date(startDate)&&new Date(ev.date)<=new Date(endDate)))
-  //   );
-  // }
-
-  public createEvent(event: Event): void {
+  public createEvent(event: Event) {
     console.log('creating');
-    console.log(event);
-    
-    this.events$.next([...this.events$.getValue(), event])
+    // event.date = new Date(event.date).toISOString();
+    // let events = this.events.value;
+    // events.push(event);
+    // this.events.next(events);
   }
 
-  public updateEvent(event: Event): Observable<Event[]> {
+  public updateEvent(event: Event){
     console.log('updating');
-    console.log(event.id);
-    console.log(event);
+    // let events = this.events.value;
+    // let eventIndex = events.findIndex((ev)=>ev.id == event.id);
+    // events[eventIndex] = event;
+    // console.log(events);
     
-    return this.events$;
+    // events.splice(eventIndex, 1);
+    // events.push(event)
+    // this.events.next(events);
+    // console.log(this.events);
+    
   }
 
-  public deleteEvent(id: number): Observable<Event[]> {
-    console.log('deleting');
-    console.log(id);
-    
-    this.events$.subscribe((event)=>{
-      return event.filter((ev)=>ev.id != id);
-      // this.events$.next(events.filter((ev)=>ev.id != id));
-    })
-    return this.events$;
+  public deleteEvent(id: number) {
+    let events = this.events.value;
+    events = events.filter(ev=>ev.id !=id);
+    this.events.next(events);
   }
-
-  
-
-  // createEvent(event: any) {
-  //   eventsJSON.eventsList.push(event);
-  // }
 }
