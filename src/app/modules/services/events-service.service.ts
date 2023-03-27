@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-// import eventsJSON from '../../../mock/events.mock.json'
 
 export interface Event {
   title: string,
@@ -43,25 +42,21 @@ export class EventsService {
   }
 
   public createEvent(event: Event) {
-    console.log('creating');
-    // event.date = new Date(event.date).toISOString();
-    // let events = this.events.value;
-    // events.push(event);
-    // this.events.next(events);
+    event.date = new Date(event.date).toISOString();
+    let evento: any = [] 
+    Object.assign(evento, event)
+    this.events.next([evento,...this.events.value]);
   }
 
   public updateEvent(event: Event){
-    console.log('updating');
-    // let events = this.events.value;
-    // let eventIndex = events.findIndex((ev)=>ev.id == event.id);
-    // events[eventIndex] = event;
-    // console.log(events);
-    
-    // events.splice(eventIndex, 1);
-    // events.push(event)
-    // this.events.next(events);
-    // console.log(this.events);
-    
+    event.date = new Date(event.date).toISOString();
+    let events = this.events.value;
+    events = events.filter(ev=>ev.id !=event.id);
+    this.events.next(events);
+    let evento: any = [] 
+    Object.assign(evento, event)
+    this.events.next([evento,...this.events.value]);
+
   }
 
   public deleteEvent(id: number) {
