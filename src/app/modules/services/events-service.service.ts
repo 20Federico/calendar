@@ -35,7 +35,7 @@ export class EventsService {
   }
 
   public getEvents(startDate: string, endDate: string): Observable<Event[]> {
-    this.events.pipe(
+    this.events$ = this.events.pipe(
       map((events:Event[])=> events.filter((ev)=>new Date(ev.date)>=new Date(startDate)&&new Date(ev.date)<=new Date(endDate)))
     );
     return this.events$; 
